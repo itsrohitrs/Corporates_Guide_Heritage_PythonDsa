@@ -1,0 +1,190 @@
+## File Name: day9_rohit_assignment.py
+# ==================================================
+# Q1. Student Marks Dictionary
+# ==================================================
+
+students = {
+    "Rahul": 85,
+    "Amit": 78,
+    "Priya": 90,
+    "Sneha": 80,
+    "Karan": 79
+}
+
+print("Student Names:", list(students.keys()))
+print("Marks:", list(students.values()))
+
+average = sum(students.values()) / len(students)
+print("Average Marks:", average)
+
+# ==================================================
+# Q2. Word Frequency Counter
+# ==================================================
+
+text = "python is easy and python is powerful"
+
+words = text.split()
+
+freq = {}
+
+for word in words:
+    freq[word] = freq.get(word, 0) + 1
+
+print("\nWord Frequency:")
+print(freq)
+
+# ==================================================
+# Q3. Employee Lookup using get()
+# ==================================================
+
+employees = {
+    101: "Rahul",
+    102: "Amit",
+    103: "Priya",
+    104: "Sneha"
+}
+
+emp_id = int(input("\nEnter Employee ID: "))
+
+print(employees.get(emp_id, "Employee Not Found"))
+
+# ==================================================
+# Q4. Dictionary Inventory Management
+# ==================================================
+
+inventory = {
+    "Laptop": 15,
+    "Mouse": 50,
+    "Keyboard": 30
+}
+
+print("\nProducts:", inventory.keys())
+print("Quantities:", inventory.values())
+
+print("\nProduct and Quantity:")
+
+for product, quantity in inventory.items():
+    print(product, ":", quantity)
+
+# ==================================================
+# Q5. Common Subjects Between Students
+# ==================================================
+
+student1 = {"Math", "Physics", "Chemistry", "English"}
+student2 = {"Math", "Biology", "English", "History"}
+
+print("\nCommon Subjects:")
+print(student1 & student2)
+
+print("Only Student 1:")
+print(student1 - student2)
+
+print("Only Student 2:")
+print(student2 - student1)
+
+# ==================================================
+# Q6. Remove Duplicate Customer IDs
+# ==================================================
+
+customer_ids = [101,102,103,101,104,102,105,103]
+
+unique_ids = sorted(set(customer_ids))
+
+print("\nUnique Customer IDs:")
+print(unique_ids)
+
+# ==================================================
+# Q7. Library Membership Analysis
+# ==================================================
+
+library_A = {"Rahul", "Amit", "Priya", "Sneha"}
+library_B = {"Priya", "Karan", "Amit", "Vikram"}
+
+print("\nCommon Members:")
+print(library_A.intersection(library_B))
+
+print("All Members:")
+print(library_A.union(library_B))
+
+print("Only Library A:")
+print(library_A.difference(library_B))
+
+# ==================================================
+# Q8. Dictionary-Based Shopping Cart
+# ==================================================
+
+cart = {
+    "Laptop": 50000,
+    "Mouse": 500,
+    "Keyboard": 1500
+}
+
+# Add product
+cart["Monitor"] = 12000
+
+# Update price
+cart["Mouse"] = 600
+
+# Remove product
+cart.pop("Keyboard")
+
+# Total cart value
+total = sum(cart.values())
+
+print("\nShopping Cart:")
+print(cart)
+
+print("Total Cart Value:", total)
+
+# ==================================================
+# Q9. Set-Based Event Registration System
+# ==================================================
+
+event1 = {"Aman", "Riya", "Karan", "Neha"}
+event2 = {"Neha", "Riya", "Vikas", "Rohan"}
+
+print("\nRegistered in Both Events:")
+print(event1 & event2)
+
+print("Registered in Exactly One Event:")
+print(event1 ^ event2)
+
+print("Total Unique Attendees:")
+print(len(event1 | event2))
+
+# ==================================================
+# Q10. Choosing the Right Data Structure
+# ==================================================
+
+# Dictionary:
+# Used because student details have key-value pairs.
+
+students = {
+    101: {"Name": "Rahul", "Course": "Python"},
+    102: {"Name": "Amit", "Course": "Java"},
+    103: {"Name": "Priya", "Course": "C++"}
+}
+
+print("\nStudent Details:")
+print(students)
+
+# Set:
+# Used because course categories should be unique.
+
+course_categories = {
+    "Programming",
+    "Data Science",
+    "Web Development",
+    "Programming"
+}
+
+print("\nCourse Categories:")
+print(course_categories)
+
+# List:
+# Used because ratings can have duplicates and order matters.
+
+course_ratings = [4.5, 4.8, 4.2, 4.8, 5.0]
+
+print("\nCourse Ratings:")
+print(course_ratings)
