@@ -1,214 +1,244 @@
 # ==========================================
-# DSA MODULE 3 ASSIGNMENT
-# Linked Lists
+# DSA MODULE 4 - TREES & BST ASSIGNMENT
+# ==========================================
 
+# ==========================================
 # Question 1
-# Node, Head, Pointer Explanation
+# Node, Root, Leaf, Height
 # ==========================================
 
 print("========== Question 1 ==========")
 
 print("""
 Node:
-A node is the basic building block of a Linked List.
-Each node contains:
-1. Data
-2. Pointer (Reference to next node)
+A node is a single element in a binary tree that stores data.
 
-Head:
-The head is the first node of the linked list.
-It is used to access the entire list.
+Root:
+The root is the topmost node of the tree.
 
-Pointer:
-A pointer (reference) stores the address of the next node.
-It creates the chain between nodes.
+Leaf:
+A leaf node is a node that has no children.
 
-Representation:
+Height:
+The height of a tree is the number of edges on the longest path
+from the root to a leaf.
 
-Head
- |
- v
-[3|*] -> [16|*] -> [9|*] -> [21|None]
+Given Tree:
 
-The last node points to None, indicating the end of the list.
+          8
+         / \\
+        3   10
+       / \\
+      1   6
+
+Root = 8
+
+Leaf Nodes = 1, 6, 10
+
+Height = 2
+(8 -> 3 -> 1 or 8 -> 3 -> 6)
 """)
 
 
 # ==========================================
-# Node Class
+# TreeNode Class
 # ==========================================
 
-class Node:
+class TreeNode:
     def __init__(self, data):
         self.data = data
-        self.next = None
+        self.left = None
+        self.right = None
+
+
+# ==========================================
+# Build Tree for Traversals
+# ==========================================
+
+root = TreeNode(8)
+
+root.left = TreeNode(3)
+root.right = TreeNode(10)
+
+root.left.left = TreeNode(1)
+root.left.right = TreeNode(6)
 
 
 # ==========================================
 # Question 2
-# Insert at End
+# Inorder, Preorder, Postorder
 # ==========================================
 
 print("\n========== Question 2 ==========")
 
-def insert_at_end(head, data):
+def inorder(node):
+    if node:
+        inorder(node.left)
+        print(node.data, end=" ")
+        inorder(node.right)
 
-    new_node = Node(data)
+def preorder(node):
+    if node:
+        print(node.data, end=" ")
+        preorder(node.left)
+        preorder(node.right)
 
-    # Empty list
-    if head is None:
-        return new_node
-
-    current = head
-
-    while current.next:
-        current = current.next
-
-    current.next = new_node
-
-    return head
+def postorder(node):
+    if node:
+        postorder(node.left)
+        postorder(node.right)
+        print(node.data, end=" ")
 
 
-# Testing
-head = None
+print("Inorder Traversal:")
+inorder(root)
+print()
 
-head = insert_at_end(head, 10)
-head = insert_at_end(head, 20)
-head = insert_at_end(head, 30)
+print("Preorder Traversal:")
+preorder(root)
+print()
 
-print("Linked List after insertion:")
+print("Postorder Traversal:")
+postorder(root)
+print()
 
-temp = head
-while temp:
-    print(temp.data, end=" -> ")
-    temp = temp.next
+print("""
+Explanation:
+Inorder traversal of a BST always gives sorted output because
+it visits:
+Left Subtree -> Root -> Right Subtree
 
-print("None")
+According to BST rules:
+Left < Root < Right
+""")
 
 
 # ==========================================
 # Question 3
-# Singly vs Doubly Linked List
+# BST Insertion
 # ==========================================
 
 print("\n========== Question 3 ==========")
 
 print("""
-Singly Linked List:
-- Each node stores:
-    Data + Next Pointer
-- Traversal possible only in forward direction.
-
-Example:
-10 -> 20 -> 30 -> None
-
-Doubly Linked List:
-- Each node stores:
-    Previous Pointer + Data + Next Pointer
-- Traversal possible in both forward and backward directions.
-
-Example:
-None <- 10 <-> 20 <-> 30 -> None
-
-Why deletion is easier in Doubly Linked List?
-
-Because every node has a previous pointer.
-If we already have a reference to a node,
-we can directly connect its previous node
-to its next node without searching from the head.
+BST Rule:
+For every node:
+- Values smaller than the node go to the left subtree.
+- Values greater than the node go to the right subtree.
 """)
+
+
+def insert(node, data):
+
+    if node is None:
+        return TreeNode(data)
+
+    if data < node.data:
+        node.left = insert(node.left, data)
+
+    elif data > node.data:
+        node.right = insert(node.right, data)
+
+    return node
+
+
+# Testing BST Insertion
+
+bst_root = None
+
+values = [50, 30, 70, 20, 40, 60, 80]
+
+for value in values:
+    bst_root = insert(bst_root, value)
+
+print("BST Created Successfully")
 
 
 # ==========================================
 # Question 4
-# Time Complexity Table
+# BST Deletion Cases
 # ==========================================
 
 print("\n========== Question 4 ==========")
 
 print("""
-Operation               Array           Linked List
+Case 1: Leaf Node
 
-Access by index         O(1)            O(n)
+Example:
 
-Insert at beginning     O(n)            O(1)
+    10
+   /
+  5
 
-Insert at end           O(1)*           O(n)
+Delete 5
 
-*For dynamic arrays like Python lists, append is usually O(1).
+Simply remove the node.
 
-Justification:
+----------------------------------
 
-Array Access:
-Arrays store elements in contiguous memory locations.
-So arr[i] can be accessed directly in O(1).
+Case 2: Node with One Child
 
-Linked List Access:
-To reach the ith node, we must traverse node by node.
-Hence O(n).
+Example:
+
+    10
+   /
+  5
+ /
+2
+
+Delete 5
+
+Connect parent directly to child.
+
+Result:
+
+    10
+   /
+  2
+
+----------------------------------
+
+Case 3: Node with Two Children
+
+Example:
+
+       50
+      /  \\
+    30    70
+   / \\   / \\
+ 20  40 60  80
+
+Delete 50
+
+Replace 50 with its Inorder Successor.
+
+----------------------------------
+
+What is Inorder Successor?
+
+The inorder successor is the smallest value
+present in the right subtree.
+
+For node 50:
+
+Right Subtree:
+
+       70
+      / \\
+    60   80
+
+Smallest value = 60
+
+So 60 is the inorder successor.
+
+----------------------------------
+
+Why do we use the Inorder Successor?
+
+Because replacing a node with its inorder successor
+preserves the BST property:
+
+Left Subtree < Root < Right Subtree
+
+Therefore the tree remains a valid BST after deletion.
 """)
-
-
-# ==========================================
-# Question 5
-# Size Method
-# ==========================================
-
-print("\n========== Question 5 ==========")
-
-class LinkedList:
-
-    def __init__(self):
-        self.head = None
-
-    def insert_at_end(self, data):
-
-        new_node = Node(data)
-
-        if self.head is None:
-            self.head = new_node
-            return
-
-        current = self.head
-
-        while current.next:
-            current = current.next
-
-        current.next = new_node
-
-    def size(self):
-
-        count = 0
-
-        current = self.head
-
-        while current:
-            count += 1
-            current = current.next
-
-        return count
-
-    def display(self):
-
-        current = self.head
-
-        while current:
-            print(current.data, end=" -> ")
-            current = current.next
-
-        print("None")
-
-
-# Example
-
-ll = LinkedList()
-
-ll.insert_at_end(5)
-ll.insert_at_end(10)
-ll.insert_at_end(15)
-ll.insert_at_end(20)
-
-print("Linked List:")
-ll.display()
-
-print("Size of Linked List:", ll.size())
